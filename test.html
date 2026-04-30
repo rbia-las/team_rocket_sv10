@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Test imagenes Pokemon</title>
+<style>
+body{font-family:sans-serif;padding:20px;background:#0a0a14;color:#fff}
+h1{color:#e94560;font-size:18px;margin-bottom:20px}
+.card{margin:20px 0;padding:12px;background:#16162a;border-radius:8px;border:1px solid #333}
+.card h3{color:#e94560;font-size:14px;margin-bottom:8px;font-family:monospace;word-break:break-all}
+.card img{max-width:140px;display:block;margin:8px 0;background:#222;border:1px solid #333}
+.card img.ok{border-color:#0c8}
+.card img.fail{border-color:#e94560}
+.status{font-size:11px;font-weight:bold;font-family:monospace}
+.ok{color:#0c8}
+.fail{color:#e94560}
+</style>
+</head><body>
+<h1>TEST DE FUENTES DE IMAGENES POKEMON SV10</h1>
+<p style="color:#888;font-size:12px;margin-bottom:20px">Estas son URLs candidatas. La que carga es la que funciona en TU red. Mostrame cual carga.</p>
+
+<div class="card">
+  <h3>TCGdex EN low webp</h3>
+  <div style="font-size:10px;color:#888;word-break:break-all">https://assets.tcgdex.net/en/sv/sv10/1/low.webp</div>
+  <img src="https://assets.tcgdex.net/en/sv/sv10/1/low.webp" alt="test"
+       onload="this.classList.add('ok');this.nextElementSibling.textContent='✓ FUNCIONA';this.nextElementSibling.className='status ok'"
+       onerror="this.classList.add('fail');this.nextElementSibling.textContent='✗ FALLO';this.nextElementSibling.className='status fail'">
+  <span class="status">cargando...</span>
+</div>
+
+<div class="card">
+  <h3>TCGdex EN high webp</h3>
+  <div style="font-size:10px;color:#888;word-break:break-all">https://assets.tcgdex.net/en/sv/sv10/1/high.webp</div>
+  <img src="https://assets.tcgdex.net/en/sv/sv10/1/high.webp" alt="test"
+       onload="this.classList.add('ok');this.nextElementSibling.textContent='✓ FUNCIONA';this.nextElementSibling.className='status ok'"
+       onerror="this.classList.add('fail');this.nextElementSibling.textContent='✗ FALLO';this.nextElementSibling.className='status fail'">
+  <span class="status">cargando...</span>
+</div>
+
+<div class="card">
+  <h3>TCGdex EN low png</h3>
+  <div style="font-size:10px;color:#888;word-break:break-all">https://assets.tcgdex.net/en/sv/sv10/1/low.png</div>
+  <img src="https://assets.tcgdex.net/en/sv/sv10/1/low.png" alt="test"
+       onload="this.classList.add('ok');this.nextElementSibling.textContent='✓ FUNCIONA';this.nextElementSibling.className='status ok'"
+       onerror="this.classList.add('fail');this.nextElementSibling.textContent='✗ FALLO';this.nextElementSibling.className='status fail'">
+  <span class="status">cargando...</span>
+</div>
+
+<div class="card">
+  <h3>TCGdex JP low webp</h3>
+  <div style="font-size:10px;color:#888;word-break:break-all">https://assets.tcgdex.net/ja/sv/sv10/1/low.webp</div>
+  <img src="https://assets.tcgdex.net/ja/sv/sv10/1/low.webp" alt="test"
+       onload="this.classList.add('ok');this.nextElementSibling.textContent='✓ FUNCIONA';this.nextElementSibling.className='status ok'"
+       onerror="this.classList.add('fail');this.nextElementSibling.textContent='✗ FALLO';this.nextElementSibling.className='status fail'">
+  <span class="status">cargando...</span>
+</div>
+
+<div class="card">
+  <h3>TCGdex JP high webp</h3>
+  <div style="font-size:10px;color:#888;word-break:break-all">https://assets.tcgdex.net/ja/sv/sv10/1/high.webp</div>
+  <img src="https://assets.tcgdex.net/ja/sv/sv10/1/high.webp" alt="test"
+       onload="this.classList.add('ok');this.nextElementSibling.textContent='✓ FUNCIONA';this.nextElementSibling.className='status ok'"
+       onerror="this.classList.add('fail');this.nextElementSibling.textContent='✗ FALLO';this.nextElementSibling.className='status fail'">
+  <span class="status">cargando...</span>
+</div>
+
+<div class="card">
+  <h3>Limitless</h3>
+  <div style="font-size:10px;color:#888;word-break:break-all">https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpc/SV10/SV10_1_R_JP_SM.png</div>
+  <img src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpc/SV10/SV10_1_R_JP_SM.png" alt="test"
+       onload="this.classList.add('ok');this.nextElementSibling.textContent='✓ FUNCIONA';this.nextElementSibling.className='status ok'"
+       onerror="this.classList.add('fail');this.nextElementSibling.textContent='✗ FALLO';this.nextElementSibling.className='status fail'">
+  <span class="status">cargando...</span>
+</div>
+
+<div class="card">
+  <h3>CorsProxy + Limitless</h3>
+  <div style="font-size:10px;color:#888;word-break:break-all">https://corsproxy.io/?url=https%3A%2F%2Flimitlesstcg.nyc3.cdn.digitaloceanspaces.com%2Ftpc%2FSV10%2FSV10_1_R_JP_SM.png</div>
+  <img src="https://corsproxy.io/?url=https%3A%2F%2Flimitlesstcg.nyc3.cdn.digitaloceanspaces.com%2Ftpc%2FSV10%2FSV10_1_R_JP_SM.png" alt="test"
+       onload="this.classList.add('ok');this.nextElementSibling.textContent='✓ FUNCIONA';this.nextElementSibling.className='status ok'"
+       onerror="this.classList.add('fail');this.nextElementSibling.textContent='✗ FALLO';this.nextElementSibling.className='status fail'">
+  <span class="status">cargando...</span>
+</div>
+
+<div class="card">
+  <h3>AllOrigins</h3>
+  <div style="font-size:10px;color:#888;word-break:break-all">https://api.allorigins.win/raw?url=https%3A%2F%2Flimitlesstcg.nyc3.cdn.digitaloceanspaces.com%2Ftpc%2FSV10%2FSV10_1_R_JP_SM.png</div>
+  <img src="https://api.allorigins.win/raw?url=https%3A%2F%2Flimitlesstcg.nyc3.cdn.digitaloceanspaces.com%2Ftpc%2FSV10%2FSV10_1_R_JP_SM.png" alt="test"
+       onload="this.classList.add('ok');this.nextElementSibling.textContent='✓ FUNCIONA';this.nextElementSibling.className='status ok'"
+       onerror="this.classList.add('fail');this.nextElementSibling.textContent='✗ FALLO';this.nextElementSibling.className='status fail'">
+  <span class="status">cargando...</span>
+</div>
+</body></html>

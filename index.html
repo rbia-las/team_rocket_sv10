@@ -90,7 +90,10 @@ body{background:var(--dark);color:#f0f0f0;font-family:'Rajdhani',sans-serif;heig
 .owned-ov.on{opacity:1}
 .big-check{font-size:72px;color:var(--green);filter:drop-shadow(0 0 18px rgba(0,200,81,.7))}
 .cname{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;margin-top:14px;text-align:center}
-.crar{font-size:10px;letter-spacing:3px;margin-top:3px;margin-bottom:14px}
+.crar{font-size:10px;letter-spacing:3px}
+.crar-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:3px;margin-bottom:14px}
+.buy-pill{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:700;letter-spacing:.5px;color:#fff;background:linear-gradient(135deg,var(--red),#1c5fcc);padding:4px 10px;border-radius:12px;text-decoration:none;box-shadow:0 2px 8px rgba(47,143,255,.35);white-space:nowrap}
+.buy-pill:active{transform:scale(.94)}
 .chk{width:68px;height:68px;border-radius:50%;border:2.5px solid var(--red);background:rgba(10,10,20,.85);color:var(--red);font-size:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(8px)}
 .chk.on{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 0 28px rgba(0,200,81,.55)}
 .chk:active{transform:scale(.88)}
@@ -248,7 +251,10 @@ body{background:var(--dark);color:#f0f0f0;font-family:'Rajdhani',sans-serif;heig
         <div class="owned-ov" id="cow-ov"><span class="big-check">&#10003;</span></div>
       </div>
       <div class="cname" id="cname">-</div>
-      <div class="crar" id="crar"></div>
+      <div class="crar-row">
+        <div class="crar" id="crar"></div>
+        <a class="buy-pill" id="buylink" target="_blank" rel="noopener">&#128722; Comprar</a>
+      </div>
     </div>
   </div>
   <div id="cv-bot">
@@ -308,6 +314,18 @@ function imgSources(num){
     "https://assets.tcgdex.net/en/sv/blk/"+num+"/high.webp"
   ];
 }
+/* BUY LINK - busca la carta en tiendas chilenas (TCGmatch prioritario) */
+var TRAINER_EN={
+  "Globo Helio":"Air Balloon","Fosil Tapa Antiguo":"Antique Cover Fossil",
+  "Moneda Energetica":"Energy Coin","Oryza":"Fennel","Plan de N":"N's Plan",
+  "Pokegear 3.0":"Pokegear 3.0","Investigacion de Profesores":"Professor's Research",
+  "Energia Prisma":"Prism Energy"
+};
+function buyUrl(name){
+  var q=TRAINER_EN[name]||name;
+  return "https://www.google.com/search?q=" + encodeURIComponent('site:tcgmatch.cl "'+q+'" "Black Bolt"');
+}
+
 function hcardFallback(el){
   var num=parseInt(el.getAttribute('data-n'),10);
   var i=parseInt(el.getAttribute('data-i'),10)+1;
@@ -348,6 +366,7 @@ function renderCard(){
   document.getElementById("cname").textContent=card[1];
   var rEl=document.getElementById("crar");
   rEl.textContent=card[2].toUpperCase();rEl.className="crar "+rc(card[2]);
+  document.getElementById("buylink").href=buyUrl(card[1]);
   document.getElementById("cow-ov").classList.toggle("on",isOwn);
   document.getElementById("chk-btn").classList.toggle("on",isOwn);
 

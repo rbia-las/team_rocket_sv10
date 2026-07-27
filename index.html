@@ -180,7 +180,7 @@ body{background:var(--dark);color:#f0f0f0;font-family:'Rajdhani',sans-serif;heig
   <div class="h-cards-row">
 
     <a href="https://www.cardmarket.com/en/Pokemon/Products/Singles/Black-Bolt/Serperior-ex-V3-BLK164" target="_blank" class="h-card-link">
-      <img src="https://pkmncards.com/wp-content/uploads/zsv10-5_en_164_std.png" class="h-card-img" onerror="this.parentElement.classList.add('h-card-error');this.style.display='none'">
+      <img src="https://pkmncards.com/wp-content/uploads/zsv10-5_en_164_std.png" class="h-card-img" data-n="164" data-i="0" onerror="hcardFallback(this)">
       <div class="h-card-overlay"></div>
       <div class="h-card-sar" style="background:rgba(212,170,255,.92);color:#1a0a2e">SAR</div>
       <div class="h-card-label">
@@ -189,7 +189,7 @@ body{background:var(--dark);color:#f0f0f0;font-family:'Rajdhani',sans-serif;heig
     </a>
 
     <a href="https://www.cardmarket.com/en/Pokemon/Products/Singles/Black-Bolt/Kyurem-ex-V3-BLK165" target="_blank" class="h-card-link">
-      <img src="https://pkmncards.com/wp-content/uploads/zsv10-5_en_165_std.png" class="h-card-img" onerror="this.parentElement.classList.add('h-card-error');this.style.display='none'">
+      <img src="https://pkmncards.com/wp-content/uploads/zsv10-5_en_165_std.png" class="h-card-img" data-n="165" data-i="0" onerror="hcardFallback(this)">
       <div class="h-card-overlay"></div>
       <div class="h-card-sar" style="background:rgba(212,170,255,.92);color:#1a0a2e">SAR</div>
       <div class="h-card-label">
@@ -198,7 +198,7 @@ body{background:var(--dark);color:#f0f0f0;font-family:'Rajdhani',sans-serif;heig
     </a>
 
     <a href="https://www.cardmarket.com/en/Pokemon/Products/Singles/Black-Bolt/Zekrom-ex-V3-BLK166" target="_blank" class="h-card-link">
-      <img src="https://pkmncards.com/wp-content/uploads/zsv10-5_en_166_std.png" class="h-card-img" onerror="this.parentElement.classList.add('h-card-error');this.style.display='none'">
+      <img src="https://pkmncards.com/wp-content/uploads/zsv10-5_en_166_std.png" class="h-card-img" data-n="166" data-i="0" onerror="hcardFallback(this)">
       <div class="h-card-overlay"></div>
       <div class="h-card-sar" style="background:rgba(212,170,255,.92);color:#1a0a2e">SAR</div>
       <div class="h-card-label">
@@ -207,7 +207,7 @@ body{background:var(--dark);color:#f0f0f0;font-family:'Rajdhani',sans-serif;heig
     </a>
 
     <a href="https://www.cardmarket.com/en/Pokemon/Products/Singles/Black-Bolt/Victini-V3-BLK171" target="_blank" class="h-card-link">
-      <img src="https://pkmncards.com/wp-content/uploads/zsv10-5_en_171_std.png" class="h-card-img" onerror="this.parentElement.classList.add('h-card-error');this.style.display='none'">
+      <img src="https://pkmncards.com/wp-content/uploads/zsv10-5_en_171_std.png" class="h-card-img" data-n="171" data-i="0" onerror="hcardFallback(this)">
       <div class="h-card-overlay"></div>
       <div class="h-card-sar" style="background:rgba(212,170,255,.92);color:#1a0a2e">SAR</div>
       <div class="h-card-label">
@@ -296,14 +296,34 @@ function toast(msg){
   clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("on")},2000);
 }
 
-/* IMAGE - direct CDN URL, no CORS issues */
-/* Image source: Limitless TCG CDN (verified working) */
+/* IMAGE - multiple CDN sources, tries each in order until one loads */
 function pad3(n){n=""+n;return n.length>=3?n:("000"+n).slice(-3);}
-function imgUrl(num){
-  return "https://pkmncards.com/wp-content/uploads/zsv10-5_en_" + pad3(num) + "_std.png";
+function imgSources(num){
+  var p=pad3(num);
+  return [
+    "https://pkmncards.com/wp-content/uploads/zsv10-5_en_"+p+"_std.png",
+    "https://pkmncards.com/wp-content/uploads/zsv10-5_en_"+p+"_std.jpg",
+    "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/BLK/BLK_"+p+"_R_EN_SM.png",
+    "https://assets.tcgdex.net/en/sv/sv10-5/"+num+"/high.webp",
+    "https://assets.tcgdex.net/en/sv/blk/"+num+"/high.webp"
+  ];
 }
-function imgUrlFallback(num){
-  return "https://pkmncards.com/wp-content/uploads/zsv10-5_en_" + pad3(num) + "_std.jpg";
+function hcardFallback(el){
+  var num=parseInt(el.getAttribute('data-n'),10);
+  var i=parseInt(el.getAttribute('data-i'),10)+1;
+  var sources=imgSources(num);
+  if(i>=sources.length){el.parentElement.classList.add('h-card-error');el.style.display='none';return;}
+  el.setAttribute('data-i',i);
+  el.src=sources[i];
+}
+function loadWithFallback(img,num,onFail){
+  var sources=imgSources(num),i=0;
+  function tryNext(){
+    if(i>=sources.length){if(onFail)onFail();return;}
+    img.src=sources[i++];
+  }
+  img.onerror=tryNext;
+  tryNext();
 }
 
 /* CARD VIEW */
@@ -331,16 +351,11 @@ function renderCard(){
   document.getElementById("cow-ov").classList.toggle("on",isOwn);
   document.getElementById("chk-btn").classList.toggle("on",isOwn);
 
-  /* Image from TCGdex CDN with fallback */
+  /* Image with automatic multi-source fallback */
   var img=document.getElementById("cimg");
   img.style.opacity="0";
-  var triedFallback=false;
   img.onload=function(){img.style.transition="opacity .3s";img.style.opacity="1";};
-  img.onerror=function(){
-    if(!triedFallback){triedFallback=true;img.src=imgUrlFallback(card[0]);}
-    else{img.style.opacity="0.3";}
-  };
-  img.src=imgUrl(card[0]);
+  loadWithFallback(img,card[0],function(){img.style.opacity="0.3";});
 
   /* dots */
   var dotsEl=document.getElementById("dots");dotsEl.innerHTML="";
@@ -430,16 +445,15 @@ function renderGrid(){
       document.getElementById('cv-back-btn').innerHTML='&#8592; CUADRICULA';
     };
     var img=document.createElement("img");
-    
+
     img.loading="lazy";
-    img.src=imgUrl(card[0]);
     img.style.opacity="0";
     img.onload=function(){this.style.transition="opacity .3s";this.style.opacity="1";};
-    img.onerror=function(){
+    loadWithFallback(img,card[0],function(){
       var ni=document.createElement("div");ni.className="ni";
       ni.innerHTML='<span>#'+card[0]+'</span><small>'+card[1]+'</small>';
-      div.replaceChild(ni,this);
-    };
+      if(img.parentNode)div.replaceChild(ni,img);
+    });
     div.appendChild(img);
     var badge=document.createElement("div");badge.className="gbadge";badge.innerHTML="&#10003;";div.appendChild(badge);
     g.appendChild(div);

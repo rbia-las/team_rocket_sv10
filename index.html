@@ -323,7 +323,7 @@ var TRAINER_EN={
 };
 function buyUrl(name){
   var q=TRAINER_EN[name]||name;
-  return "https://www.google.com/search?q=" + encodeURIComponent('site:tcgmatch.cl "'+q+'" "Black Bolt"');
+  return "https://www.google.com/search?q=" + encodeURIComponent('(site:tcgmatch.cl OR site:itemfinder.cl OR site:cardpulsechile.com) '+q+' pokemon');
 }
 
 function hcardFallback(el){
